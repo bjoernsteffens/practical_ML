@@ -93,33 +93,33 @@ confusionMatrix(pred1, trnSubset$classe)
 ## 
 ##           Reference
 ## Prediction A B C D E
-##          A 6 0 0 0 0
-##          B 0 4 0 0 1
-##          C 0 0 2 0 0
-##          D 0 0 1 2 0
-##          E 0 0 0 1 3
+##          A 5 0 0 0 0
+##          B 1 2 0 0 0
+##          C 0 1 2 1 0
+##          D 0 1 1 2 0
+##          E 0 0 0 0 4
 ## 
 ## Overall Statistics
-##                                           
-##                Accuracy : 0.85            
-##                  95% CI : (0.6211, 0.9679)
-##     No Information Rate : 0.3             
-##     P-Value [Acc > NIR] : 5.427e-07       
-##                                           
-##                   Kappa : 0.8083          
-##  Mcnemar's Test P-Value : NA              
+##                                          
+##                Accuracy : 0.75           
+##                  95% CI : (0.509, 0.9134)
+##     No Information Rate : 0.3            
+##     P-Value [Acc > NIR] : 4.294e-05      
+##                                          
+##                   Kappa : 0.6855         
+##  Mcnemar's Test P-Value : NA             
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity               1.0   1.0000   0.6667   0.6667   0.7500
-## Specificity               1.0   0.9375   1.0000   0.9412   0.9375
-## Pos Pred Value            1.0   0.8000   1.0000   0.6667   0.7500
-## Neg Pred Value            1.0   1.0000   0.9444   0.9412   0.9375
-## Prevalence                0.3   0.2000   0.1500   0.1500   0.2000
-## Detection Rate            0.3   0.2000   0.1000   0.1000   0.1500
-## Detection Prevalence      0.3   0.2500   0.1000   0.1500   0.2000
-## Balanced Accuracy         1.0   0.9688   0.8333   0.8039   0.8438
+## Sensitivity            0.8333   0.5000   0.6667   0.6667      1.0
+## Specificity            1.0000   0.9375   0.8824   0.8824      1.0
+## Pos Pred Value         1.0000   0.6667   0.5000   0.5000      1.0
+## Neg Pred Value         0.9333   0.8824   0.9375   0.9375      1.0
+## Prevalence             0.3000   0.2000   0.1500   0.1500      0.2
+## Detection Rate         0.2500   0.1000   0.1000   0.1000      0.2
+## Detection Prevalence   0.2500   0.1500   0.2000   0.2000      0.2
+## Balanced Accuracy      0.9167   0.7188   0.7745   0.7745      1.0
 ```
 
 ```r

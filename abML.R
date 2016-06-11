@@ -48,7 +48,7 @@ trnSubset <- trn[-trnArray,]
 
 #
 # How does this look like?
-plot(trnSubset$classe, col="blue", main="Bar Plot of levels of the variable classe within the subTraining data set", xlab="classe levels", ylab="Frequency")
+plot(trnLarge$classe, col="red", main="Distribution of Movement Classes", xlab="Variable Class", ylab="Frequency")
 
 # ** CREATE MODELS AND COMPARE
 # Train the model, create the prediction 
@@ -63,13 +63,14 @@ confusionMatrix(pred1, trnSubset$classe)
 # and then verify how acurate it is
 mod2  <- randomForest(classe ~. , data=trnLarge, method="class")
 pred2 <- predict(mod2, trnSubset, type = "class")
+plot(mod2)
 confusionMatrix(pred2, trnSubset$classe)
 
 #
 # Random Forests seems to be more acurate vs deciscion tree.
 # Apply the better model to the test set
-predFin1 <- predict(mod1, test, type = "class")
-predFin2 <- predict(mod2, test, type = "class")
+predFin1 <- predict(mod1, tst, type = "class")
+predFin2 <- predict(mod2, tst, type = "class")
 
 # Less Accurate Model
 print(predFin1)
