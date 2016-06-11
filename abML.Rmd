@@ -1,0 +1,95 @@
+---
+title: "Activity based machine learning (ML)"
+author: "Bjoern W. Steffens"
+date: "7 June 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## My Code Starts Here
+
+```{r, echo = TRUE, cache = TRUE}
+
+setwd("~/mycloud/Private_DataScience/Coursera/10 Data Science Specialisation/70 Practical Machine Learning/Assignments")
+rm(list=ls())
+
+require(dplyr)
+require(caret)
+require(randomForest)
+require(rpart)
+require(rpart.plot)
+
+#
+# Acquire and load the files
+testFile  <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
+trainFile <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
+if ( !file.exists("test.csv") && !file.exists("train.csv") ) {
+
+    download.file(testFile, "test.csv")
+    download.file(trainFail, "train.csv")
+    
+}
+
+test = read.csv("test.csv",na.strings=c("NA","#DIV/0!"))
+train = read.csv("train.csv",na.strings=c("NA","#DIV/0!"))
+
+# ** CLEAN THE DATA
+#
+# Remove columns that may not influence
+# the prediction
+dropCols <- c("X","user_name",
+              "raw_timestamp_part_1",
+              "raw_timestamp_part_2",
+              "cvtd_timestamp",
+              "num_window", "new_window")
+test[,dropCols] <- NULL
+train[,dropCols] <- NULL
+
+#
+# There is a ton of cols with NAs. Remove them too
+test  <- test[,colSums(is.na(test)) == 0]
+train <- train[,colSums(is.na(train)) == 0]
+
+# ** START PREPARING THE DATA
+# Split up the training set to enable
+# cross validation
+trainArray  <- createDataPartition(y=train$classe, p=0.99885, list=FALSE)
+trainLarge  <- train[trainArray,]
+trainSubset <- train[-trainArray,]
+
+
+#
+# How does this look like?
+plot(trainSubset$classe, col="blue", main="Bar Plot of levels of the variable classe within the subTraining data set", xlab="classe levels", ylab="Frequency")
+
+# ** CREATE MODELS AND COMPARE
+# Train the model, create the prediction 
+# and then verify how acurate it is
+mod1  <- rpart(classe ~ ., data=trainLarge, method="class")
+pred1 <- predict(mod1, trainSubset, type = "class")
+confusionMatrix(pred1, trainSubset$classe)
+
+#
+# Train the other model, create the prediction 
+# and then verify how acurate it is
+mod2  <- randomForest(classe ~. , data=trainLarge, method="class")
+pred2 <- predict(mod2, trainSubset, type = "class")
+confusionMatrix(pred2, trainSubset$classe)
+
+#
+# Random Forests seems to be more acurate vs deciscion tree.
+# Apply the better model to the test set
+predFin1 <- predict(mod1, test, type = "class")
+predFin2 <- predict(mod2, test, type = "class")
+
+# Less Accurate Model
+print(predFin1)
+
+# More Accurate Model
+print(predFin2)
+```
+
